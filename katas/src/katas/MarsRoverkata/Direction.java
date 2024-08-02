@@ -22,7 +22,7 @@ public enum Direction {
         return isX;
     }
 
-    Direction spin(boolean clockWise) {
+    public Direction spin(boolean clockWise) {
         return Direction.values()[inLimit(getIndex(), clockWise ? 1 : -1, Direction.values().length)];
     }
 

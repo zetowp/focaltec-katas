@@ -1,5 +1,6 @@
-package katas.MarsRoverkata;
+package katas.MarsRoverkata.controllers;
 
+import katas.MarsRoverkata.MarsRover;
 
 public interface RoverCommand {
 

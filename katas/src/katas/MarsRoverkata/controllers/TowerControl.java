@@ -1,52 +1,31 @@
-package katas.MarsRoverkata;
-
-import static org.junit.Assert.assertEquals;
+package katas.MarsRoverkata.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import katas.MarsRoverkata.Direction;
+import katas.MarsRoverkata.MarsObject;
+import katas.MarsRoverkata.MarsRover;
 
-
-public class MarsRoverKata {
-
-    @Test
-    public void doWalkTest() {
-        assertMArsWalk("MMMMMLMMMRMMXMMMM", new MarsObject[] {}, 7, 1);
-        assertMArsWalk("MMMMMLMMMRMMMMMM", new MarsObject[] { new MarsObject(1, 1) }, 7, 1);
-        assertMArsWalk("MMMMMLMMMRMMMMMM", new MarsObject[] { new MarsObject(8, 5) }, 9, 5);
-        assertMArsWalk("MMMMMLMMMRMMMMMM", new MarsObject[] { new MarsObject(8, 5), new MarsObject(0, 3) }, 0, 2);
-    }
-
-    private void assertMArsWalk(String commands, MarsObject[] obstacles, int expX, int expY) {
-        TowerControl tower = new TowerControl(10, 10, obstacles);
-        MarsRover rover = new MarsRover();
-        tower.doWalk(rover, commands);
-        assertEquals(expX, rover.x);
-        assertEquals(expY, rover.y);
-    }
-
-}
-
-class TowerControl {
+public class TowerControl {
 
     private int limitX;
 
     private int limitY;
 
     private MarsObject[] obstacles;
-    
-    
 
+    private LenguageCommands leng;
 
-    public TowerControl(int limitX, int limitY, MarsObject... obstacles) {
+    public TowerControl(LenguageCommands leng, int limitX, int limitY, MarsObject... obstacles) {
         this.limitX = limitX;
         this.limitY = limitY;
         this.obstacles = obstacles;
+        this.leng = leng;
     }
 
     public void doWalk(MarsRover rover, String allCommands) {
-        for(RoverCommand c : toCommands(allCommands)) {
+        for (RoverCommand c : toCommands(allCommands)) {
             c.execute(rover);
             if (detectCollition(rover)) {
                 c.rollback(rover);
@@ -73,16 +52,13 @@ class TowerControl {
     }
 
     private RoverCommand toCommand(char c) {
-        switch (c) {
-            case 'L':
-                return spinRover(false);
-            case 'R':
-                return spinRover(true);
-            case 'M':
-                return moveRover();
-            default:
-                return doNothing();
-        }
+        if (c == leng.spinCounterClockWise())
+            return spinRover(false);
+        if (c == leng.spinClockWise())
+            return spinRover(true);
+        if (c == leng.move())
+            return moveRover();
+        return doNothing();
     }
 
     private RoverCommand spinRover(boolean dir) {
@@ -90,12 +66,12 @@ class TowerControl {
 
             @Override
             public void rollback(MarsRover rover) {
-                rover.dir = rover.dir.spin(!dir);
+                rover.setDir(rover.getDir().spin(!dir));
             }
 
             @Override
             public void execute(MarsRover rover) {
-                rover.dir = rover.dir.spin(dir);
+                rover.setDir(rover.getDir().spin(dir));
             }
         };
     }
@@ -109,10 +85,10 @@ class TowerControl {
             }
 
             private void move(MarsRover rover, int dir) {
-                if (rover.dir.isX()) {
-                    rover.x = Direction.inLimit(rover.x, dir * rover.dir.getAdd(), limitX);
+                if (rover.getDir().isX()) {
+                    rover.setX(Direction.inLimit(rover.getX(), dir * rover.getDir().getAdd(), limitX));
                 } else {
-                    rover.y = Direction.inLimit(rover.y, dir * rover.dir.getAdd(), limitY);
+                    rover.setY(Direction.inLimit(rover.getY(), dir * rover.getDir().getAdd(), limitY));
                 }
             }
 

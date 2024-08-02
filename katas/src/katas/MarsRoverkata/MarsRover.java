@@ -14,6 +14,14 @@ public class MarsRover extends MarsObject {
         this.dir = dir;
     }
 
+    public Direction getDir() {
+        return dir;
+    }
+
+    public void setDir(Direction dir) {
+        this.dir = dir;
+    }
+
     @Override
     public String toString() {
         return super.toString() + ", dir=" + dir;
