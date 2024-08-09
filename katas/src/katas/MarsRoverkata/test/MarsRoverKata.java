@@ -7,35 +7,62 @@ import org.junit.Test;
 import katas.MarsRoverkata.MarsObject;
 import katas.MarsRoverkata.MarsRover;
 import katas.MarsRoverkata.controllers.TowerControl;
+import katas.MarsRoverkata.controllers.TowerControlLangFactory;
 
 public class MarsRoverKata {
 
     @Test
-    public void doWalkTest() {
-        assertMarsWalk("MMMMMLMMMRMMXMMMM", setUpTowerControl(new MarsObject[] {}, "eng"), 7, 1);
-        assertMarsWalk("MMMMMLMMMRMMMMMM", setUpTowerControl(new MarsObject[] { new MarsObject(1, 1) }, "eng"), 7, 1);
-        assertMarsWalk("MMMMMLMMMRMMMMMM", setUpTowerControl(new MarsObject[] { new MarsObject(8, 5) }, "eng"), 9, 5);
+    public void givenFactory_doWalkRover() {
+        TowerControlFactory factory = new TowerControlFactory(10);
+
+        assertMarsWalk("MMMMMLMMMRMMXMMMM", factory.usTower(new MarsObject[] {}), 7, 1);
         assertMarsWalk("MMMMMLMMMRMMMMMM",
-                setUpTowerControl(new MarsObject[] { new MarsObject(8, 5), new MarsObject(0, 3) }, "eng"), 0, 2);
+                factory.usTower(new MarsObject[] { new MarsObject(1, 1) }), 7, 1);
+        assertMarsWalk("MMMMMLMMMRMMMMMM",
+                factory.usTower(new MarsObject[] { new MarsObject(8, 5) }), 9, 5);
+        assertMarsWalk("MMMMMLMMMRMMMMMM",
+                factory.usTower(new MarsObject[] { new MarsObject(8, 5), new MarsObject(0, 3) }), 0, 2);
         // en espaniol no se mueve por que no reconoce comandos
         assertMarsWalk("MMMMMLMMMRMMMMMM",
-                setUpTowerControl(new MarsObject[] { new MarsObject(8, 5), new MarsObject(0, 3) }, "esp"), 0, 0);
+                factory.mxTower(new MarsObject[] { new MarsObject(8, 5), new MarsObject(0, 3) }), 0, 0);
         // en espanil
-        assertMarsWalk("AAAAAIAAADAAXAAAA", setUpTowerControl(new MarsObject[] {}, "esp"), 7, 1);
-        assertMarsWalk("AAAAAIAAADAAAAAA", setUpTowerControl(new MarsObject[] { new MarsObject(1, 1) }, "esp"), 7, 1);
-        assertMarsWalk("AAAAAIAAADAAAAAA", setUpTowerControl(new MarsObject[] { new MarsObject(8, 5) }, "esp"), 9, 5);
+        assertMarsWalk("AAAAAIAAADAAXAAAA", factory.mxTower(new MarsObject[] {}), 7, 1);
         assertMarsWalk("AAAAAIAAADAAAAAA",
-                setUpTowerControl(new MarsObject[] { new MarsObject(8, 5), new MarsObject(0, 3) }, "esp"), 0, 2);
+                factory.mxTower(new MarsObject[] { new MarsObject(1, 1) }), 7, 1);
+        assertMarsWalk("AAAAAIAAADAAAAAA",
+                factory.mxTower(new MarsObject[] { new MarsObject(8, 5) }), 9, 5);
+        assertMarsWalk("AAAAAIAAADAAAAAA",
+                factory.mxTower(new MarsObject[] { new MarsObject(8, 5), new MarsObject(0, 3) }), 0, 2);
+    }
+
+    @Test
+    public void givenAbstractFactory_doWalkRover() {
+        TowerControlLangFactory factory = new TowerControlStringFactory(10, "eng");
+        assertMarsWalk("MMMMMLMMMRMMXMMMM", factory.buildTower((new MarsObject[] {})), 7, 1);
+        assertMarsWalk("MMMMMLMMMRMMMMMM", factory.buildTower(new MarsObject[] { new MarsObject(1, 1) }), 7, 1);
+        assertMarsWalk("MMMMMLMMMRMMMMMM", factory.buildTower(new MarsObject[] { new MarsObject(8, 5) }), 9, 5);
+        assertMarsWalk("MMMMMLMMMRMMMMMM",
+                factory.buildTower(new MarsObject[] { new MarsObject(8, 5), new MarsObject(0, 3) }), 0, 2);
+        // en espaniol no se mueve por que no reconoce comandos
+        factory = new TowerControlStringFactory(10, "esp");
+        assertMarsWalk("MMMMMLMMMRMMMMMM",
+                factory.buildTower(new MarsObject[] { new MarsObject(8, 5), new MarsObject(0, 3) }), 0, 0);
+        // en espanil
+        assertMarsWalk("AAAAAIAAADAAXAAAA", factory.buildTower(new MarsObject[] {}), 7, 1);
+        assertMarsWalk("AAAAAIAAADAAAAAA", factory.buildTower(new MarsObject[] { new MarsObject(1, 1) }), 7, 1);
+        assertMarsWalk("AAAAAIAAADAAAAAA", factory.buildTower(new MarsObject[] { new MarsObject(8, 5) }), 9, 5);
+        assertMarsWalk("AAAAAIAAADAAAAAA",
+                factory.buildTower(new MarsObject[] { new MarsObject(8, 5), new MarsObject(0, 3) }), 0, 2);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void givenNullLenguage_throwsIllegal() {
-        setUpTowerControl(new MarsObject[] {}, null);
+        new TowerControlStringFactory(10, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void givenBadLenguage_throwsIllegal() {
-        setUpTowerControl(new MarsObject[] {}, "bad");
+        new TowerControlStringFactory(10, "bad");
     }
 
     private void assertMarsWalk(String commands, TowerControl tower, int expX, int expY) {
@@ -45,8 +72,7 @@ public class MarsRoverKata {
         assertEquals(expY, rover.getY());
     }
 
-    private TowerControl setUpTowerControl(MarsObject[] obstacles, String lenguage) {
-        return new TowerControl(new LenguajeCommandBulderString().buildLenguaje(lenguage), 10, 10, obstacles);
-    }
+
+
 
 }

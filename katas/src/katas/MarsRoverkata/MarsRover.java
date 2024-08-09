@@ -24,7 +24,7 @@ public class MarsRover extends MarsObject {
 
     @Override
     public String toString() {
-        return super.toString() + ", dir=" + dir;
+        return super.toString();
     }
 
 }

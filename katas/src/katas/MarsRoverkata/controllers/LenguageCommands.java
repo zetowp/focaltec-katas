@@ -1,5 +1,6 @@
 package katas.MarsRoverkata.controllers;
 
+import katas.MarsRoverkata.Direction;
 
 public interface LenguageCommands {
 
@@ -8,5 +9,7 @@ public interface LenguageCommands {
     char spinCounterClockWise();
 
     char move();
+
+    String getDirectionDescription(Direction dir);
 
 }

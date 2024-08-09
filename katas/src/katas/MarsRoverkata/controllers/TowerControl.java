@@ -17,11 +17,11 @@ public class TowerControl {
 
     private LenguageCommands leng;
 
-    public TowerControl(LenguageCommands leng, int limitX, int limitY, MarsObject... obstacles) {
+    public TowerControl(LenguageCommands lang, int limitX, int limitY, MarsObject... obstacles) {
         this.limitX = limitX;
         this.limitY = limitY;
         this.obstacles = obstacles;
-        this.leng = leng;
+        this.leng = lang;
     }
 
     public void doWalk(MarsRover rover, String allCommands) {
@@ -32,7 +32,11 @@ public class TowerControl {
                 return;
             }
         }
-        System.out.println(rover);
+        System.out.println(printLocation(rover));
+    }
+
+    private String printLocation(MarsRover rover) {
+        return String.format("%s, %s", rover.toString(), leng.getDirectionDescription(rover.getDir()));
     }
 
     private boolean detectCollition(MarsRover rover) {
