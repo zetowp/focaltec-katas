@@ -1,4 +1,4 @@
-package katas.MarsRoverkata.test;
+package katas.MarsRoverkata.impl;
 
 import katas.MarsRoverkata.MarsObject;
 import katas.MarsRoverkata.controllers.TowerControl;

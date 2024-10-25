@@ -1,6 +1,7 @@
-package katas.MarsRoverkata.test;
+package katas.MarsRoverkata.impl;
 
-import org.junit.platform.commons.util.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 
 import katas.MarsRoverkata.MarsObject;
 import katas.MarsRoverkata.controllers.LenguageCommands;

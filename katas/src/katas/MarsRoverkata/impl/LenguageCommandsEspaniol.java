@@ -1,4 +1,4 @@
-package katas.MarsRoverkata.test;
+package katas.MarsRoverkata.impl;
 
 import katas.MarsRoverkata.Direction;
 import katas.MarsRoverkata.controllers.LenguageCommands;

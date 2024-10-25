@@ -1,8 +1,11 @@
 package katas.tennis;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import katas.tennis.Player;
+import katas.tennis.Points;
 
 public class TennisKata {
 

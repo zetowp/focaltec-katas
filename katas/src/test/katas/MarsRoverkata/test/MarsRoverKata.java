@@ -8,6 +8,8 @@ import katas.MarsRoverkata.MarsObject;
 import katas.MarsRoverkata.MarsRover;
 import katas.MarsRoverkata.controllers.TowerControl;
 import katas.MarsRoverkata.controllers.TowerControlLangFactory;
+import katas.MarsRoverkata.impl.TowerControlFactory;
+import katas.MarsRoverkata.impl.TowerControlStringFactory;
 
 public class MarsRoverKata {
 
@@ -16,10 +18,8 @@ public class MarsRoverKata {
         TowerControlFactory factory = new TowerControlFactory(10);
 
         assertMarsWalk("MMMMMLMMMRMMXMMMM", factory.usTower(new MarsObject[] {}), 7, 1);
-        assertMarsWalk("MMMMMLMMMRMMMMMM",
-                factory.usTower(new MarsObject[] { new MarsObject(1, 1) }), 7, 1);
-        assertMarsWalk("MMMMMLMMMRMMMMMM",
-                factory.usTower(new MarsObject[] { new MarsObject(8, 5) }), 9, 5);
+        assertMarsWalk("MMMMMLMMMRMMMMMM", factory.usTower(new MarsObject[] { new MarsObject(1, 1) }), 7, 1);
+        assertMarsWalk("MMMMMLMMMRMMMMMM", factory.usTower(new MarsObject[] { new MarsObject(8, 5) }), 9, 5);
         assertMarsWalk("MMMMMLMMMRMMMMMM",
                 factory.usTower(new MarsObject[] { new MarsObject(8, 5), new MarsObject(0, 3) }), 0, 2);
         // en espaniol no se mueve por que no reconoce comandos
@@ -27,10 +27,8 @@ public class MarsRoverKata {
                 factory.mxTower(new MarsObject[] { new MarsObject(8, 5), new MarsObject(0, 3) }), 0, 0);
         // en espanil
         assertMarsWalk("AAAAAIAAADAAXAAAA", factory.mxTower(new MarsObject[] {}), 7, 1);
-        assertMarsWalk("AAAAAIAAADAAAAAA",
-                factory.mxTower(new MarsObject[] { new MarsObject(1, 1) }), 7, 1);
-        assertMarsWalk("AAAAAIAAADAAAAAA",
-                factory.mxTower(new MarsObject[] { new MarsObject(8, 5) }), 9, 5);
+        assertMarsWalk("AAAAAIAAADAAAAAA", factory.mxTower(new MarsObject[] { new MarsObject(1, 1) }), 7, 1);
+        assertMarsWalk("AAAAAIAAADAAAAAA", factory.mxTower(new MarsObject[] { new MarsObject(8, 5) }), 9, 5);
         assertMarsWalk("AAAAAIAAADAAAAAA",
                 factory.mxTower(new MarsObject[] { new MarsObject(8, 5), new MarsObject(0, 3) }), 0, 2);
     }
@@ -71,8 +69,5 @@ public class MarsRoverKata {
         assertEquals(expX, rover.getX());
         assertEquals(expY, rover.getY());
     }
-
-
-
 
 }
