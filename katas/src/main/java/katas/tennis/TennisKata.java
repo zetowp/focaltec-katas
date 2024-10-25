@@ -4,9 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import katas.tennis.Player;
-import katas.tennis.Points;
-
 public class TennisKata {
 
     @Test

@@ -1,4 +1,4 @@
-package katas.MarsRoverkata.test;
+package katas.MarsRoverkata.impl;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,8 +8,6 @@ import katas.MarsRoverkata.MarsObject;
 import katas.MarsRoverkata.MarsRover;
 import katas.MarsRoverkata.controllers.TowerControl;
 import katas.MarsRoverkata.controllers.TowerControlLangFactory;
-import katas.MarsRoverkata.impl.TowerControlFactory;
-import katas.MarsRoverkata.impl.TowerControlStringFactory;
 
 public class MarsRoverKata {
 

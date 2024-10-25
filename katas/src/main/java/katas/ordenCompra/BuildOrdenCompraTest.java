@@ -8,7 +8,6 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import katas.ordenCompra.PsvOrdenCompraBuilder;
 import katas.ordenCompra.builder.OrdenCompraBuilder;
 import katas.ordenCompra.builder.ReportDirector;
 import katas.ordenCompra.data.OrdenCompra;
