@@ -2,14 +2,19 @@ package katas.ordenCompra.builder;
 
 import java.util.Date;
 
+import katas.ordenCompra.data.OrdenCompra;
+
 public interface OrdenCompraBuilder {
 
-    void createHeader(String no, Date frcha, String dirEntrega);
+    void createHeader(String no, Date fecha, String dirEntrega);
 
-    void createPerson(String rfc, String nombre);
+    void createSolicitante(String rfc, String nombre);
+
+    void createProveedor(String rfc, String nombre);
 
     void createProduct(String cve, int cantidad, String desc);
 
-    byte[] createReport();
+    OrdenCompra create();
+
 
 }

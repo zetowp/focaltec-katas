@@ -4,10 +4,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import katas.ordenCompra.builder.OrdenCompraBuilder;
+import katas.ordenCompra.builder.OrdenCompraReportBuilder;
 
 
-public class PsvOrdenCompraBuilder implements OrdenCompraBuilder {
+public class PsvOrdenCompraBuilder implements OrdenCompraReportBuilder<String> {
     
     private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -42,9 +42,9 @@ public class PsvOrdenCompraBuilder implements OrdenCompraBuilder {
     }
 
     @Override
-    public byte[] createReport() {
+    public String createReport() {
         String result = builder.toString();
-        return result.substring(0, result.length() - 1).getBytes();
+        return result.substring(0, result.length() - 1);
     }
 
 }
