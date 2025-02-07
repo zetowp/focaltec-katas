@@ -3,9 +3,9 @@ package katas.fileSize;
 import katas.fileSize.impl.Dir;
 import katas.fileSize.impl.StandarFile;
 
-public interface FileSystemCounter {
+public interface FileSystemCounterVisitor {
 
-    int count(Dir fs);
+    int visit(Dir fs);
 
-    int count(StandarFile fs);
+    int visit(StandarFile fs);
 }

@@ -1,6 +1,6 @@
 package katas.fileSize.impl;
 
-import katas.fileSize.FileSystemCounter;
+import katas.fileSize.FileSystemCounterVisitor;
 import katas.fileSize.PlainFileFileSystem;
 
 public class StandarFile implements PlainFileFileSystem {
@@ -26,8 +26,8 @@ public class StandarFile implements PlainFileFileSystem {
     }
 
     @Override
-    public int count(FileSystemCounter c) {
-        return c.count(this);
+    public int accept(FileSystemCounterVisitor c) {
+        return c.visit(this);
     }
 
 }

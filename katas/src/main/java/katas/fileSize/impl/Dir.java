@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import katas.fileSize.DirectoryFileSystem;
 import katas.fileSize.FileSystem;
-import katas.fileSize.FileSystemCounter;
+import katas.fileSize.FileSystemCounterVisitor;
 
 public class Dir implements DirectoryFileSystem {
 
@@ -32,8 +32,8 @@ public class Dir implements DirectoryFileSystem {
     }
 
     @Override
-    public int count(FileSystemCounter c) {
-        return c.count(this);
+    public int accept(FileSystemCounterVisitor c) {
+        return c.visit(this);
     }
 
 }

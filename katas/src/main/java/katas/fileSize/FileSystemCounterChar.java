@@ -6,15 +6,15 @@ import katas.fileSize.impl.Dir;
 import katas.fileSize.impl.StandarFile;
 
 
-public class FileSystemCounterChar implements FileSystemCounter {
+public class FileSystemCounterChar implements FileSystemCounterVisitor {
 
     @Override
-    public int count(Dir fs) {
-        return fs.getContent().stream().filter(Objects::nonNull).mapToInt(f -> f.count(this)).sum();
+    public int visit(Dir fs) {
+        return fs.getContent().stream().filter(Objects::nonNull).mapToInt(f -> f.accept(this)).sum();
     }
 
     @Override
-    public int count(StandarFile fs) {
+    public int visit(StandarFile fs) {
         return fs.getContent() == null ? 0 : new String(fs.getContent()).length();
     }
 

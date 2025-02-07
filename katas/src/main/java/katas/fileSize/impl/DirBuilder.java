@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import katas.fileSize.FileSystem;
-import katas.fileSize.FileSystemCounter;
+import katas.fileSize.FileSystemCounterVisitor;
 
 public class DirBuilder implements FileSystem {
 
@@ -44,8 +44,8 @@ public class DirBuilder implements FileSystem {
     }
 
     @Override
-    public int count(FileSystemCounter c) {
-        return src.count(c);
+    public int accept(FileSystemCounterVisitor c) {
+        return src.accept(c);
     }
 
 }

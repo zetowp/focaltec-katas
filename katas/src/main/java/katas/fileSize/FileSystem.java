@@ -5,6 +5,6 @@ public interface FileSystem {
 
     long getSize();
 
-    int count(FileSystemCounter c);
+    int accept(FileSystemCounterVisitor c);
 
 }
