@@ -5,4 +5,6 @@ public interface FileSystem {
 
     long getSize();
 
+    int count(FileSystemCounter c);
+
 }

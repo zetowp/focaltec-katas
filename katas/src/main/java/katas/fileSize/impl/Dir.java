@@ -6,13 +6,18 @@ import java.util.Objects;
 
 import katas.fileSize.DirectoryFileSystem;
 import katas.fileSize.FileSystem;
+import katas.fileSize.FileSystemCounter;
 
 public class Dir implements DirectoryFileSystem {
 
     private final List<FileSystem> content;
 
     public Dir() {
-        this.content = new ArrayList<FileSystem>();
+        this.content = new ArrayList<>();
+    }
+
+    public List<FileSystem> getContent() {
+        return content;
     }
 
     @Override
@@ -24,6 +29,11 @@ public class Dir implements DirectoryFileSystem {
     public DirectoryFileSystem append(FileSystem fs) {
         content.add(fs);
         return this;
+    }
+
+    @Override
+    public int count(FileSystemCounter c) {
+        return c.count(this);
     }
 
 }

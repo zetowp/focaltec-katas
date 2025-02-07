@@ -1,8 +1,11 @@
 package katas.fileSize.impl;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import katas.fileSize.FileSystem;
+import katas.fileSize.FileSystemCounter;
 
 public class DirBuilder implements FileSystem {
 
@@ -21,15 +24,28 @@ public class DirBuilder implements FileSystem {
                 }
                 return d;
             } else {
-                return new StandarFile(new byte[(int) f.length()]);
+                return new StandarFile(getFile(f));
             }
         } else
             return new StandarFile();
     }
 
+    private byte[] getFile(File f) {
+        try {
+            return Files.readAllBytes(f.toPath());
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     @Override
     public long getSize() {
         return src.getSize();
+    }
+
+    @Override
+    public int count(FileSystemCounter c) {
+        return src.count(c);
     }
 
 }
