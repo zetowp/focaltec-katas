@@ -23,6 +23,7 @@ public class ParkingLot {
             if (!lot[i]) {
                 lot[i] = true;
                 publisher.notifyPark(lot);
+                return i;
             }
         }
         return -1;
