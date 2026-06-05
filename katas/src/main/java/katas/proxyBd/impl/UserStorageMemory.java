@@ -11,31 +11,31 @@ import katas.proxyBd.UserStorage;
 
 public class UserStorageMemory implements UserStorage {
 
-    private List<User> users = init();
+    private final List<User> users = this.init();
 
     private List<User> init() {
-        List<User> u = new ArrayList<>();
+        final List<User> u = new ArrayList<>();
         u.addAll(Arrays.asList(new User(1, "hola"), new User(2, "mundo")));
         return u;
     }
 
     @Override
     public List<User> findAll() {
-        return users;
+        return this.users;
     }
 
     @Override
-    public User upsert(User u) {
+    public User upsert(final User u) {
         if (u.getId() == null) {
-            OptionalInt preNext = findAll().stream().mapToInt(User::getId).max();
+            final OptionalInt preNext = this.findAll().stream().mapToInt(User::getId).max();
             u.setId(preNext.isPresent() ? preNext.getAsInt() + 1 : 1);
-            users.add(u);
+            this.users.add(u);
             return u;
         } else {
-            Optional<User> toUpdate = users.stream().filter(us -> us.getId().equals(u.getId())).findFirst();
-            if (toUpdate.isEmpty()) {
+            final Optional<User> toUpdate = this.users.stream().filter(us -> us.getId().equals(u.getId())).findFirst();
+            if (!toUpdate.isPresent()) {
                 u.setId(null);
-                return upsert(u);
+                return this.upsert(u);
             } else {
                 toUpdate.get().setName(u.getName());
                 return toUpdate.get();
@@ -45,8 +45,8 @@ public class UserStorageMemory implements UserStorage {
     }
 
     @Override
-    public User find(int id) {
-        Optional<User> match = users.stream().filter(us -> us.getId().equals(id)).findFirst();
+    public User find(final int id) {
+        final Optional<User> match = this.users.stream().filter(us -> us.getId().equals(id)).findFirst();
         return match.isPresent() ? match.get() : null;
     }
 
