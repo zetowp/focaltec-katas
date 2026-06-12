@@ -2,54 +2,49 @@ package katas.bowling;
 
 public class BowlingGame {
 
-    private int score = 0;
+    private final int[] rolls = new int[21];
 
-    private int inFrame = -1;
-
-    private final int strikeBonus = -1;
-
-    private boolean lastRollWasSpare;
-
-    private boolean lastRollWasStrike;
-
-    private boolean addedOneForStrike;
-
-    private boolean beforeLAstWasStrinke;
+    private int currentRoll;
 
     public void roll(final int i) {
-        this.score += i;
-        if (this.lastRollWasSpare) {
-            this.score += i;
-            this.lastRollWasSpare = false;
-        } else if (this.lastRollWasStrike) {
-            this.score += i;
-            this.addedOneForStrike = !this.addedOneForStrike;
-            this.lastRollWasStrike = this.addedOneForStrike;
-        }
-        if (this.beforeLAstWasStrinke) {
-            this.score += i;
-            this.beforeLAstWasStrinke = false;
-        }
-        this.checkBonus(i);
-    }
-
-    private void checkBonus(final int i) {
-        if (this.inFrame >= 0) {
-            this.lastRollWasSpare = this.inFrame + i == 10;
-            this.inFrame = -1;
-        } else {
-            if (i == 10) {
-                this.lastRollWasStrike = true;
-                this.beforeLAstWasStrinke = true;
-                this.inFrame = -1;
-            } else {
-                this.inFrame = i;
-            }
-        }
+        this.rolls[this.currentRoll++] = i;
     }
 
     public int score() {
-        return this.score;
+        int score = 0;
+        int frameIndex = 0;
+
+        for (int frame = 0; frame < 10 && hasRoll(frameIndex); frame++) {
+            if (isStrike(frameIndex)) {
+                score += 10;
+                if (hasRoll(frameIndex + 2)) {
+                    score += this.rolls[frameIndex + 1] + this.rolls[frameIndex + 2];
+                }
+                frameIndex += 1;
+            } else {
+                if (!hasRoll(frameIndex + 1)) {
+                    score += this.rolls[frameIndex];
+                    frameIndex += 1;
+                    continue;
+                }
+
+                final int frameScore = this.rolls[frameIndex] + this.rolls[frameIndex + 1];
+                score += frameScore;
+                if (frameScore == 10 && hasRoll(frameIndex + 2)) {
+                    score += this.rolls[frameIndex + 2];
+                }
+                frameIndex += 2;
+            }
+        }
+
+        return score;
     }
 
+    private boolean isStrike(final int frameIndex) {
+        return this.rolls[frameIndex] == 10;
+    }
+
+    private boolean hasRoll(final int rollIndex) {
+        return rollIndex < this.currentRoll;
+    }
 }
